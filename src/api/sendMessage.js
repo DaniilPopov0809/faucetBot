@@ -11,7 +11,7 @@ export const sendMessage = async ({
   timeout,
 }) => {
   console.log("Sending message...");
-  const { signal } = new AbortController();
+  const controller = new AbortController();
   //timeout for response
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 
@@ -33,7 +33,7 @@ export const sendMessage = async ({
           signature: signature,
         },
       }),
-      signal,
+      signal: controller.signal,
       agent: new HttpsProxyAgent(proxyServer),
     });
 

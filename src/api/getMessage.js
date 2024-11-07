@@ -8,7 +8,7 @@ export const getMessage = async ({ proxyServer, timeout }) => {
   let message = "";
   let isError = false;
 
-  const { signal } = new AbortController();
+  const controller = new AbortController();
   //timeout for response
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 
@@ -29,7 +29,7 @@ export const getMessage = async ({ proxyServer, timeout }) => {
           symbol: "Sonic",
         },
       }),
-      signal,
+      signal: controller.signal,
       agent: new HttpsProxyAgent(proxyServer),
     });
 
